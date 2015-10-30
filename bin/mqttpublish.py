@@ -28,9 +28,21 @@ def on_connect(client, userdata, flags, rc):
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     print("Received the message : "+str(msg.payload)+" on topic : "+str(msg.topic))
- # Write code to test what command we have received and respond accordingly
-    message = "\"I received the ls command\""
-    client.publish(topic_result, message)
+#strip the incoming command from its json - TODO
+    command=str(msg.payload)
+ # Write code to test what command we have received and respond accordingly right now testing on non stripped json
+    if command == 'b\'"ls"\'':
+      message = "{\"Message\":\"I received the ls command\"}"
+      client.publish(topic_result, message)
+      print("Sent ls")
+    elif command == 'b\'"cd"\'':
+      message = "{\"Message\":\"I received the cd command\"}"
+      client.publish(topic_result, message)
+      print("Sent cd")
+    else:
+      message = "{\"Message\":\"I received an unkown command\"}"
+      client.publish(topic_result, message)
+      print("Sent unknown")
 
 
 def on_publish(mosq, obj, mid):
@@ -57,5 +69,4 @@ while client.loop() == 0:
 	client.publish(topic_counter, message)
 	i =i +1
 	time.sleep(1)# sleep for 1 seconds before next call
-
 
