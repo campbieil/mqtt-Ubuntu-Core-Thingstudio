@@ -1,0 +1,24 @@
+<div class="row">
+    Example of a trendline:
+</div>
+<div>    
+    <em>Remember to click Keep Journal on the Feed Processing section of the Feed if you want to use this widget.</em>
+</div>
+<div class="row">
+    <!-- Replace this content with your own. -->
+<ts-sparkline class="col s6" maxValue="150" values="{{journal "SubscribeTestUbunutuCore"}}" legend="Line"></ts-sparkline>
+</div>
+
+<div>
+    <p>Sending commands to a device </p>
+    <button class="btn" data-feed="Publishtestubuntucore" data-message="ifconfig">Click here to send ifconfig command</button>
+    <button class="btn" data-feed="Publishtestubuntucore" data-message="ls">Click here to send ls command</button>
+</div>
+
+<hr/>
+
+{{#with message "Receive_result"}}
+
+<div style="color: black">{{Message}}</div>
+
+{{/with}}
