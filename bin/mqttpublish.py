@@ -2,6 +2,7 @@
 
 import paho.mqtt.client as mqtt
 import time
+import subprocess
 
 topic_counter ="testubuntucore/counter"
 topic_command = "testubuntucore/command"
@@ -31,12 +32,18 @@ def on_message(client, userdata, msg):
 #strip the incoming command from its json - TODO
     command=str(msg.payload)
  # Write code to test what command we have received and respond accordingly right now testing on non stripped json
-    if command == 'b\'"ls"\'':
-      message = "{\"Message\":\"I received the ls command\"}"
+    if command == 'b\'"ifconfig"\'':
+      bashCommand = "ifconfig"
+      process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+      output = process.communicate()[0]
+      message = "{\"Message\":\""+str(output)+"\"}"
       client.publish(topic_result, message)
       print("Sent ls")
-    elif command == 'b\'"cd"\'':
-      message = "{\"Message\":\"I received the cd command\"}"
+    elif command == 'b\'"ls"\'':
+      bashCommand = "ls"
+      process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+      output = process.communicate()[0]
+      message = "{\"Message\":\""+str(output)+"\"}"
       client.publish(topic_result, message)
       print("Sent cd")
     else:
